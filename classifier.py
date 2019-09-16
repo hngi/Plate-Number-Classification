@@ -33,6 +33,7 @@ def prep_data(images):
     #print("image file is "+str(image_file))
     image = read_image(image_file)
     X[:,i] = np.squeeze(image.reshape((n_x,1)))
+    #checks if it is a plate number
     if 'plate_number' in image_file.lower() :
       y[0,i] = 1
     else : # for test data
@@ -46,11 +47,11 @@ def prep_data(images):
 
 X_train, y_train = prep_data(train_images)
 X_test, test_idx = prep_data(test_images)
-
+#prints out train shape
 print("Train shape: {}".format(X_train.shape))
 print("Test shape: {}".format(X_test.shape))
 X_test, test_idx = prep_data(test_images)
-
+#2 classes for plate number and not plate number
 classes = {0: 'not a Plate Number',
            1: 'Plate Number'}
 
