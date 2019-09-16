@@ -30,9 +30,10 @@ def prep_data(images):
   print("X.shape is {}".format(X.shape))
   
   for i,image_file in enumerate(images) :
+    #print("image file is "+str(image_file))
     image = read_image(image_file)
     X[:,i] = np.squeeze(image.reshape((n_x,1)))
-    if '-' in image_file.lower() :
+    if 'plate_number' in image_file.lower() :
       y[0,i] = 1
     else : # for test data
       #y[0,i] = image_file.split('/')[-1].split('.')[0]
@@ -61,8 +62,5 @@ def show_images(X, y, idx) :
   plt.title("This is a {}".format(classes[y[idx,0]]))
   plt.show()
 
-show_images(X_train.T, y_train.T, 0)
-clf = LogisticRegressionCV()
-X_train_lr, y_train_lr = X_train.T, y_train.T.ravel()
-clf.fit(X_train_lr, y_train_lr)
-print("Model accuracy: {:.2f}%".format(clf.score(X_train_lr, y_train_lr)*100))
+show_images(X_train.T, y_train.T, 47)
+
