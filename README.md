@@ -1,2 +1,2 @@
 # Plate-Number-Classification
-https://lucid.blog/yusuffjamal3/post/ml-task-1-dd3
+1. https://lucid.blog/yusuffjamal3/post/ml-task-1-dd3 yusiffjamal3
