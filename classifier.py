@@ -3,12 +3,13 @@ import numpy as np
 import pandas as pd 
  
 import matplotlib.pyplot as plt
+from sklearn.linear_model import LogisticRegressionCV
 'exec(%matplotlib inline)'
 
 TEST_DIR = './negative_images/'
 TRAIN_DIR = './plate_number/'
-ROWS = 8
-COLS = 8
+ROWS = 500
+COLS = 500
 CHANNELS = 3
 
 train_images = [TRAIN_DIR+i for i in os.listdir(TRAIN_DIR)]
@@ -29,12 +30,15 @@ def prep_data(images):
   print("X.shape is {}".format(X.shape))
   
   for i,image_file in enumerate(images) :
+    #print("image file is "+str(image_file))
     image = read_image(image_file)
     X[:,i] = np.squeeze(image.reshape((n_x,1)))
-    if '-' in image_file.lower() :
+    #checks if it is a plate number
+    if 'plate_number' in image_file.lower() :
       y[0,i] = 1
     else : # for test data
-      y[0,i] = image_file.split('/')[-1].split('.')[0]
+      #y[0,i] = image_file.split('/')[-1].split('.')[0]
+      y[0,i] = 0
       
     if i%10 == 0 :
       print("Proceed {} of {}".format(i, m))
@@ -43,12 +47,12 @@ def prep_data(images):
 
 X_train, y_train = prep_data(train_images)
 X_test, test_idx = prep_data(test_images)
-
+#prints out train shape
 print("Train shape: {}".format(X_train.shape))
 print("Test shape: {}".format(X_test.shape))
 X_test, test_idx = prep_data(test_images)
-
-classes = {
+#2 classes for plate number and not plate number
+classes = {0: 'not a Plate Number',
            1: 'Plate Number'}
 
 def show_images(X, y, idx) :
@@ -59,4 +63,5 @@ def show_images(X, y, idx) :
   plt.title("This is a {}".format(classes[y[idx,0]]))
   plt.show()
 
-show_images(X_train.T, y_train.T, 48)
+show_images(X_train.T, y_train.T, 47)
+
