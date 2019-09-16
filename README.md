@@ -1,2 +1,2 @@
-# Plate-Number-Classification
-This is a repository for plate number classification done during the HNG 6 internship for Machine Learning track.
+Link to article: https://lucid.blog/lekeariyo2015/post/machine-learning-task-1-d95
+replace the 3rd paramerer in line 64 of classifier.py to change the image.

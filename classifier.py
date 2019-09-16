@@ -3,12 +3,13 @@ import numpy as np
 import pandas as pd 
  
 import matplotlib.pyplot as plt
+from sklearn.linear_model import LogisticRegressionCV
 'exec(%matplotlib inline)'
 
 TEST_DIR = './negative_images/'
 TRAIN_DIR = './plate_number/'
-ROWS = 8
-COLS = 8
+ROWS = 500
+COLS = 500
 CHANNELS = 3
 
 train_images = [TRAIN_DIR+i for i in os.listdir(TRAIN_DIR)]
@@ -34,7 +35,8 @@ def prep_data(images):
     if '-' in image_file.lower() :
       y[0,i] = 1
     else : # for test data
-      y[0,i] = image_file.split('/')[-1].split('.')[0]
+      #y[0,i] = image_file.split('/')[-1].split('.')[0]
+      y[0,i] = 0
       
     if i%10 == 0 :
       print("Proceed {} of {}".format(i, m))
@@ -48,7 +50,7 @@ print("Train shape: {}".format(X_train.shape))
 print("Test shape: {}".format(X_test.shape))
 X_test, test_idx = prep_data(test_images)
 
-classes = {
+classes = {0: 'not a Plate Number',
            1: 'Plate Number'}
 
 def show_images(X, y, idx) :
@@ -59,4 +61,8 @@ def show_images(X, y, idx) :
   plt.title("This is a {}".format(classes[y[idx,0]]))
   plt.show()
 
-show_images(X_train.T, y_train.T, 48)
+show_images(X_train.T, y_train.T, 0)
+clf = LogisticRegressionCV()
+X_train_lr, y_train_lr = X_train.T, y_train.T.ravel()
+clf.fit(X_train_lr, y_train_lr)
+print("Model accuracy: {:.2f}%".format(clf.score(X_train_lr, y_train_lr)*100))
